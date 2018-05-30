@@ -1,0 +1,28 @@
+@import url('https://fonts.googleapis.com/css?family=Cantarell');
+
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  min-height: calc(100vh - 200px);
+  max-height: 100vh;
+  margin: 10px;
+}
+
+body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: Cantarell, sans-serif;
+}
+
+@media screen and (min-width: 768px) {
+  .App {
+    max-width: 500px;
+  }
+}
+
+.App {
+  flex-grow: 1;
+}
