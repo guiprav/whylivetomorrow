@@ -1,4 +1,6 @@
 require('bulma/css/bulma.css');
+require('font-awesome/css/font-awesome.css');
+
 require('./App.css');
 
 require('./Active');
