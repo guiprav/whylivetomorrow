@@ -1,17 +1,48 @@
 let inputBinding = require('./helpers/inputBinding');
 let leven = require('leven');
+let moment = require('moment');
 
 module.exports = window.Active = {
   oninit: function() {
+    for (let k of ['oninterval']) {
+      this[k] = this[k].bind(this);
+    }
+
     app.active.toDoList = [
       { msg: `Don't be a fool` },
       { msg: `I don't know` },
     ];
 
     this.progress = 0;
+    this.interval = setInterval(this.oninterval, 5000);
+  },
+
+  ondestroy: function() {
+    clearInterval(this.interval);
+  },
+
+  oninterval: function() {
+    if (moment().before(app.active.alarmTime)) {
+      return;
+    }
+
+    this.ring();
+  },
+
+  ring: function() {
+    this.isRinging = true;
+    app.active.alarmTune.play();
+  },
+
+  done: function() {
+    app.active.alarmTune.stop();
+    this.isRinging = false;
+    this.isDone = true;
   },
 
   levenUpdate: function() {
+    let { toDoList } = app.active;
+
     this.progress = 0;
 
     for (let x of app.active.toDoList) {
@@ -36,13 +67,24 @@ module.exports = window.Active = {
         this.progress = 0;
       }
     }
+
+    if (toDoList.every(x => x.check)) {
+      this.done();
+    }
   },
 
   view: function() {
+    if (this.isRinging) {
+      return this.ringingView();
+    }
+
+    return m('div', '...');
+  },
+
+  ringingView: function() {
     let { toDoList } = app.active;
 
     let toDoListChecks = toDoList.filter(x => x.check);
-    let done = toDoListChecks.length >= toDoList.length;
 
     return m('.panel', [
       m('.panel-heading', `Why Live Tomorrow`),
@@ -53,7 +95,7 @@ module.exports = window.Active = {
         ]),
       ]),
 
-      !done && m('.panel-block', {
+      !this.isDone && m('.panel-block', {
         style: `position: relative`,
       }, [
         m('.is-overlay', {
