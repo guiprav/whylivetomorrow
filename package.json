@@ -14,7 +14,8 @@
     "express": "^4.16.3",
     "font-awesome": "^4.7.0",
     "leven": "^2.1.0",
-    "mithril": "^1.1.6"
+    "mithril": "^1.1.6",
+    "moment": "^2.22.2"
   },
   "devDependencies": {
     "watchify": "^3.11.0"
