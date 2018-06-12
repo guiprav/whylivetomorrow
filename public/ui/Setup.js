@@ -1,4 +1,4 @@
-let inputBinding = require('./helpers/inputBinding');
+let inputBinding = require('../helpers/inputBinding');
 
 module.exports = window.Setup = {
   oninit: function() {

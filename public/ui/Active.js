@@ -1,4 +1,4 @@
-let inputBinding = require('./helpers/inputBinding');
+let inputBinding = require('../helpers/inputBinding');
 let leven = require('leven');
 let moment = require('moment');
 
