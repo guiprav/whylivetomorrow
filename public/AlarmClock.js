@@ -48,7 +48,7 @@ module.exports = window.AlarmClock = class AlarmClock {
   onInterval() {
     if (
       !this.isSnoozing
-      && this.alarmTime.isAfter(moment())
+      && moment().isAfter(this.alarmTime)
     ) {
       this.ring();
       return;
@@ -56,7 +56,7 @@ module.exports = window.AlarmClock = class AlarmClock {
 
     if (
       this.isSnoozing
-      && this.snoozeTime.isAfter(moment())
+      && moment().isAfter(this.snoozeTime)
     ) {
       this.ring();
       return;
@@ -88,10 +88,6 @@ module.exports = window.AlarmClock = class AlarmClock {
       throw new Error(`Can't snooze if not ringing`);
     }
 
-    if (!this.snoozeTime) {
-      this.snoozeTime = this.alarmTime.clone();
-    }
-
-    this.snoozeTime.add(minutes, 'minutes');
+    this.snoozeTime = moment().add(minutes, 'minutes');
   }
 };
