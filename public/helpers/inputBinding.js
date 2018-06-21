@@ -3,6 +3,6 @@ module.exports = (ctx, propName, evName, cb) => ({
 
   [evName || 'onchange']: ev => {
     ctx[propName] = ev.target.value;
-    cb(ctx[propName]);
+    cb && cb(ctx[propName]);
   },
 });

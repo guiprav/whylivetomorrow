@@ -3,12 +3,15 @@ require('font-awesome/css/font-awesome.css');
 
 require('./App.css');
 
+require('../AlarmClock');
 require('./Active');
 require('./Setup');
 
 module.exports = window.App = {
   oninit: function() {
     window.app = this;
+
+    this.alarmClock = new AlarmClock();
 
     // FIXME: Use some sort of helper to implement these.
     Object.defineProperty(this, 'inner', {

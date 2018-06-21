@@ -22,7 +22,8 @@ module.exports = window.Setup = {
 
       m('.panel-block', [
         m('button.button.is-danger.is-fullwidth', {
-          onclick: () => this.activate(),
+          disabled: this.isAlarmTimeValid,
+          onclick: () => app.alarmClock.activate(this.alarmTime),
         }, 'Activate'),
       ]),
     ]);
@@ -32,15 +33,14 @@ module.exports = window.Setup = {
     this.tab = tab;
   },
 
-  activate: function() {
-    app.active = {};
-  },
-
   tabs: {
     'alarm': function() {
       return m('.panel-block', [
         m('input.input.has-text-centered', {
-          ...inputBinding(this, 'alarmTime'),
+          ...inputBinding(
+            this, 'alarmTimeInputVal', 'onkeyup',
+          ),
+
           placeholder: '00:00',
         }),
       ]);
@@ -49,5 +49,20 @@ module.exports = window.Setup = {
     'to-do': function() {
       return m('.panel-block', 'To-Do');
     },
+  },
+
+  get isAlarmTimeValid() {
+    return this.alarmTime.isValid() &&
+      this.alarmTimeInputVal.test(/^\d\d:\d\d$/);
+  },
+
+  get alarmTime() {
+    let m = moment(this.alarmTimeInputVal, 'HH:mm');
+
+    if (moment().isAfter(m)) {
+      m.add(1, 'day');
+    }
+
+    return m;
   },
 };

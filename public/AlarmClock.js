@@ -5,14 +5,20 @@ module.exports = window.AlarmClock = class AlarmClock {
     this.snoozeTime = null;
   }
 
+  debug(...args) {
+    console.log(`DEBUG [AlarmClock]`, ...args);
+  }
+
   set alarmUrl(val) {
     let { audio } = this;
 
     if (audio) {
+      this.debug(`audio pause / remove`);
       audio.pause();
       audio.remove();
     }
 
+    this.debug(`new Audio(${val})`);
     audio = this.audio = new Audio(val);
   }
 
@@ -33,14 +39,17 @@ module.exports = window.AlarmClock = class AlarmClock {
       throw new Error(`Missing alarm time`);
     }
 
+    this.debug(`setInterval`);
     this.interval = setInterval(
       () => this.onInterval(), 5000,
     );
   }
 
   deactivate() {
+    this.debug(`snoozeTime = null`);
     this.snoozeTime = null;
 
+    this.debug(`clearInterval`);
     clearInterval(this.interval);
     this.interval = null;
   }
@@ -50,6 +59,7 @@ module.exports = window.AlarmClock = class AlarmClock {
       !this.isSnoozing
       && moment().isAfter(this.alarmTime)
     ) {
+      this.debug(`!isSnoozing && now isAfter alarmTime`);
       this.ring();
       return;
     }
@@ -58,6 +68,7 @@ module.exports = window.AlarmClock = class AlarmClock {
       this.isSnoozing
       && moment().isAfter(this.snoozeTime)
     ) {
+      this.debug(`isSnoozing && now isAfter snoozeTime`);
       this.ring();
       return;
     }
@@ -76,7 +87,11 @@ module.exports = window.AlarmClock = class AlarmClock {
       return;
     }
 
-    this.audio.play().then(() => this.ring());
+    this.debug(`audio play`);
+    this.audio.play().then(() => {
+      this.debug(`ring again`);
+      this.ring();
+    });
   }
 
   get isSnoozing() {
@@ -88,6 +103,7 @@ module.exports = window.AlarmClock = class AlarmClock {
       throw new Error(`Can't snooze if not ringing`);
     }
 
+    this.debug(`snoozeTime = now +`, minutes, `minutes`);
     this.snoozeTime = moment().add(minutes, 'minutes');
   }
 };
