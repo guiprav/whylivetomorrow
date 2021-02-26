@@ -30,10 +30,12 @@ module.exports = window.AlarmClock = class AlarmClock {
     return !!this.interval;
   }
 
-  activate() {
+  activate(alarmTime) {
     if (this.interval) {
       throw new Error(`Already active`);
     }
+
+    this.alarmTime = alarmTime;
 
     if (!this.alarmTime) {
       throw new Error(`Missing alarm time`);

@@ -2,7 +2,9 @@ let inputBinding = require('../helpers/inputBinding');
 
 module.exports = window.Setup = {
   oninit: function() {
+    window.setup = this;
     this.tab = 'alarm';
+    this.alarmTimeInputVal = '';
   },
 
   view: function() {
@@ -22,7 +24,7 @@ module.exports = window.Setup = {
 
       m('.panel-block', [
         m('button.button.is-danger.is-fullwidth', {
-          disabled: this.isAlarmTimeValid,
+          disabled: !this.isAlarmTimeValid,
           onclick: () => app.alarmClock.activate(this.alarmTime),
         }, 'Activate'),
       ]),
@@ -53,7 +55,7 @@ module.exports = window.Setup = {
 
   get isAlarmTimeValid() {
     return this.alarmTime.isValid() &&
-      this.alarmTimeInputVal.test(/^\d\d:\d\d$/);
+      /^\d\d:\d\d$/.test(this.alarmTimeInputVal);
   },
 
   get alarmTime() {
