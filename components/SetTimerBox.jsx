@@ -16,7 +16,6 @@ class SetTimerBox {
       SetTimerBox-input
       w-full
       focus:outline-none
-      focus:ring ring-yellow-100
       rounded-lg
       px-4 py-2
       text-center

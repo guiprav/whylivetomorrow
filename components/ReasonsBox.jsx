@@ -15,9 +15,9 @@ class ReasonsBox {
       ReasonsBox-input
       w-full
       focus:outline-none
-      focus:ring ring-yellow-100
-      rounded-lg
+      border-b border-transparent
       px-4 py-2
+      text-gray-700
     `,
 
     reasons: `
@@ -29,6 +29,7 @@ class ReasonsBox {
     reason: `
       ReasonsBox-reason
       p-4
+      text-gray-600
     `,
 
     setAlarmBtn: `
@@ -40,14 +41,14 @@ class ReasonsBox {
       rounded-lg
       font-bold
       bg-yellow-300
-      text-gray-900
+      text-white
     `,
   };
 
   css = Object.create(ReasonsBox.css);
 
   constructor(props) {
-    props.reasons = props.reasons || [{ text: 'Hello' }];
+    props.reasons = props.reasons || [];
     this.props = props;
   }
 
@@ -70,7 +71,7 @@ class ReasonsBox {
       <div class={['flex', !!this.reasons.length && 'mb-1']}>
         <input
           placeholder="Why Live Tomorrow?"
-          class={this.css.input}
+          class={[this.css.input, !!this.reasons.length && 'focus:border-yellow-400']}
           onAttach={input => input.focus()}
           onKeyUp={this.onKeyUp}
         />
@@ -79,12 +80,12 @@ class ReasonsBox {
           <button
             class={this.css.setAlarmBtn}
             onClick={this.props.onSetAlarmClick}
-            children="Bed Time!"
+            children="It's bed time"
           />
         ))}
       </div>
 
-      <div class="">
+      <div class={this.css.reasons}>
         {d.map(this.reasons, x => (
           <div class={this.css.reason}>
             {x.text}
