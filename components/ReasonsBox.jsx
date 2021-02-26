@@ -20,18 +20,6 @@ class ReasonsBox {
       text-gray-700
     `,
 
-    reasons: `
-      ReasonsBox-reasons
-      flex flex-col
-      divide-y divide-gray-100
-    `,
-
-    reason: `
-      ReasonsBox-reason
-      p-4
-      text-gray-600
-    `,
-
     setAlarmBtn: `
       ReasonsBox-setAlarmBtn
       flex-shrink-0
@@ -42,6 +30,19 @@ class ReasonsBox {
       font-bold
       bg-yellow-300
       text-white
+    `,
+
+    reasons: `
+      ReasonsBox-reasons
+      flex flex-col
+      divide-y divide-gray-100
+    `,
+
+    reason: `
+      ReasonsBox-reason
+      flex justify-between
+      p-4
+      text-gray-600
     `,
   };
 
@@ -86,9 +87,10 @@ class ReasonsBox {
       </div>
 
       <div class={this.css.reasons}>
-        {d.map(this.reasons, x => (
+        {d.map(this.reasons, (x, i) => (
           <div class={this.css.reason}>
             {x.text}
+            <button onClick={() => this.reasons.splice(i, 1)} children="╳" />
           </div>
         ))}
       </div>
