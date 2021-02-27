@@ -1,12 +1,11 @@
 import ReasonsBox from './ReasonsBox.jsx';
 import SetTimerBox from './SetTimerBox.jsx';
 import d from '@dominant/core';
-import { tw } from 'twind';
+import { bem } from '../css.js';
 
 class App {
-  static css = {
-    root: tw`
-      App
+  static css = bem('App', {
+    root: `
       flex items-center justify-center
       h-screen
       p-3
@@ -14,7 +13,7 @@ class App {
       from-yellow-300
       to-yellow-400
     `,
-  };
+  });
 
   css = Object.create(App.css);
 

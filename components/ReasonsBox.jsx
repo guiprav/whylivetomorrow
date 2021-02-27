@@ -1,10 +1,9 @@
 import d from '@dominant/core';
-import { tw } from 'twind';
+import { bem, tw } from '../css.js';
 
 class ReasonsBox {
-  static css = {
-    root: tw`
-      ReasonsBox
+  static css = bem('ReasonsBox', {
+    root: `
       flex flex-col
       rounded-xl
       px-6 py-4
@@ -12,8 +11,7 @@ class ReasonsBox {
       shadow-lg
     `,
 
-    input: tw`
-      ReasonsBox-input
+    input: `
       w-full
       focus:outline-none
       border-b border-transparent
@@ -21,8 +19,7 @@ class ReasonsBox {
       text-gray-700
     `,
 
-    setAlarmBtn: tw`
-      ReasonsBox-setAlarmBtn
+    setAlarmBtn: `
       flex-shrink-0
       self-center
       focus:outline-none
@@ -33,20 +30,18 @@ class ReasonsBox {
       text-white
     `,
 
-    reasons: tw`
-      ReasonsBox-reasons
+    reasons: `
       flex flex-col
       divide-y divide-gray-100
     `,
 
-    reason: tw`
-      ReasonsBox-reason
+    reason: `
       group
       flex justify-between
       p-4
       text-gray-600
     `,
-  };
+  });
 
   css = Object.create(ReasonsBox.css);
 

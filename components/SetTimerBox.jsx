@@ -1,10 +1,9 @@
 import d from '@dominant/core';
-import { tw } from 'twind';
+import { bem } from '../css.js';
 
 class SetTimerBox {
-  static css = {
-    root: tw`
-      SetTimerBox
+  static css = bem('SetTimerBox', {
+    root: `
       flex flex-col
       w-64
       rounded-xl
@@ -13,15 +12,14 @@ class SetTimerBox {
       shadow-lg
     `,
 
-    input: tw`
-      SetTimerBox-input
+    input: `
       w-full
       focus:outline-none
       rounded-lg
       px-4 py-2
       text-center
     `,
-  };
+  });
 
   css = Object.create(SetTimerBox.css);
 
