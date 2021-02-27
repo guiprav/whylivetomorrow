@@ -24,7 +24,8 @@
     ]
   },
   "dependencies": {
-    "@dominant/core": "^0.1.5"
+    "@dominant/core": "^0.1.5",
+    "twind": "^0.15.5"
   },
   "devDependencies": {
     "@babel/core": "^7.12.13",

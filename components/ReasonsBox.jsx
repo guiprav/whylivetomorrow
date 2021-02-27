@@ -1,8 +1,9 @@
 import d from '@dominant/core';
+import { tw } from 'twind';
 
 class ReasonsBox {
   static css = {
-    root: `
+    root: tw`
       ReasonsBox
       flex flex-col
       rounded-xl
@@ -11,7 +12,7 @@ class ReasonsBox {
       shadow-lg
     `,
 
-    input: `
+    input: tw`
       ReasonsBox-input
       w-full
       focus:outline-none
@@ -20,7 +21,7 @@ class ReasonsBox {
       text-gray-700
     `,
 
-    setAlarmBtn: `
+    setAlarmBtn: tw`
       ReasonsBox-setAlarmBtn
       flex-shrink-0
       self-center
@@ -32,14 +33,15 @@ class ReasonsBox {
       text-white
     `,
 
-    reasons: `
+    reasons: tw`
       ReasonsBox-reasons
       flex flex-col
       divide-y divide-gray-100
     `,
 
-    reason: `
+    reason: tw`
       ReasonsBox-reason
+      group
       flex justify-between
       p-4
       text-gray-600
@@ -90,7 +92,11 @@ class ReasonsBox {
         {d.map(this.reasons, (x, i) => (
           <div class={this.css.reason}>
             {x.text}
-            <button onClick={() => this.reasons.splice(i, 1)} children="╳" />
+            <button
+              class={tw`invisible group-hover:visible`}
+              onClick={() => this.reasons.splice(i, 1)}
+              children="╳"
+            />
           </div>
         ))}
       </div>

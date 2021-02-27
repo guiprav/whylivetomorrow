@@ -1,8 +1,9 @@
 import d from '@dominant/core';
+import { tw } from 'twind';
 
 class SetTimerBox {
   static css = {
-    root: `
+    root: tw`
       SetTimerBox
       flex flex-col
       w-64
@@ -12,7 +13,7 @@ class SetTimerBox {
       shadow-lg
     `,
 
-    input: `
+    input: tw`
       SetTimerBox-input
       w-full
       focus:outline-none

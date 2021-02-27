@@ -1,10 +1,11 @@
 import ReasonsBox from './ReasonsBox.jsx';
 import SetTimerBox from './SetTimerBox.jsx';
 import d from '@dominant/core';
+import { tw } from 'twind';
 
 class App {
   static css = {
-    root: `
+    root: tw`
       App
       flex items-center justify-center
       h-screen
