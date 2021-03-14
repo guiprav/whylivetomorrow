@@ -7,7 +7,7 @@ class ReasonsBox {
       flex flex-col
       rounded-xl
       px-6 py-4
-      bg-white
+      bg-gray-100
       shadow-lg
     `,
 
@@ -15,8 +15,11 @@ class ReasonsBox {
       w-full
       focus:outline-none
       border-b border-transparent
+      rounded-lg
       px-4 py-2
-      text-gray-700
+      text-gray-500 hover:text-gray-800 focus:text-gray-800
+      bg-transparent focus:bg-white
+      opacity-75 hover:opacity-100 focus:opacity-100
     `,
 
     setAlarmBtn: `
@@ -71,6 +74,7 @@ class ReasonsBox {
           placeholder="Why Live Tomorrow?"
           class={[this.css.input, !!this.reasons.length && 'focus:border-yellow-400']}
           onAttach={input => input.focus()}
+          onFocus={ev => ev.target.select()}
           onKeyUp={this.onKeyUp}
         />
 

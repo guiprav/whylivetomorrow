@@ -10,8 +10,8 @@ class App {
       h-screen
       p-3
       bg-gradient-to-b
-      from-yellow-300
-      to-yellow-400
+      from-gray-900
+      to-gray-800
     `,
   });
 
