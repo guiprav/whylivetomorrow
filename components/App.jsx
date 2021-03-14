@@ -34,6 +34,7 @@ class App {
     return {
       screen: this.screen,
       reasons: this.reasons,
+      enteredReasons: this.enteredReasons,
       alarmTimeText: this.alarmTimeText,
     };
   }
@@ -60,6 +61,7 @@ class App {
 
       {d.if(this.screen === 'setReasons', (
         <ReasonsBox
+          mode="setup"
           reasons={this.reasons}
           onSetAlarmClick={() => this.screen = 'setTimer'}
         />
@@ -71,13 +73,22 @@ class App {
 
           onEscape={() => {
             this.screen = 'setReasons';
-            this.alarmTime = '';
+            this.alarmTimeText = '';
           }}
 
           onActivate={() => {
             if (!this.alarmTime) { return }
             this.screen = 'active';
           }}
+        />
+      ))}
+
+      {d.if(this.screen === 'engaged', (
+        <ReasonsBox
+          mode="engaged"
+          reasons={this.reasons}
+          enteredReasons={this.enteredReasons}
+          onDisarmClick={() => this.screen = 'setReasons'}
         />
       ))}
     </div>
@@ -101,11 +112,6 @@ class App {
   };
 
   beforeUpdate = () => {
-    if (!this.active) {
-      this.audioEl.pause();
-      this.audioEl.currentTime = 0;
-    }
-
     if (this.alarmTimeText !== this.lastAlarmTimeText) {
       this.lastAlarmTimeText = this.alarmTimeText;
 
@@ -132,13 +138,18 @@ class App {
   };
 
   onInterval = () => {
+    if (this.screen === 'engaged') { return }
+
     if (!this.active || !this.alarmTime || dayjs().isBefore(this.alarmTime)) {
       this.audioEl.pause();
       this.audioEl.currentTime = 0;
       return;
     }
 
+    this.screen = 'engaged';
     this.audioEl.play();
+
+    d.update();
   };
 }
 
