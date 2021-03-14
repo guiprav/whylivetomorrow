@@ -67,7 +67,7 @@ class ReasonsBox {
     if (this.props.mode === 'engaged') {
       let [similarity, mostSimilar] = this.mostSimilar;
 
-      text = similarity > 0 && mostSimilar?.text;
+      text = similarity > 0 && mostSimilar.text;
       if (!text) { return }
     }
 
@@ -140,7 +140,7 @@ class ReasonsBox {
             onClick={this.props.onDisarmClick}
 
             textContent={
-              this.inputText.trim() ? `${this.mostSimilar?.[0]}%` : (
+              this.inputText.trim() ? `${this.mostSimilar[0]}%` : (
                 !this.done ? [
                   this.props.enteredReasons.length,
                   this.props.reasons.length,
