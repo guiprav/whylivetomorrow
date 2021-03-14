@@ -33,6 +33,7 @@ class App {
 
   screen = 'setReasons';
   reasons = [];
+  enteredReasons = [];
   alarmTimeText = '';
 
   get persistentState() {
