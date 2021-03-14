@@ -5,7 +5,7 @@
   "author": "",
   "license": "AGPL-3.0+",
   "scripts": {
-    "start": "budo index.js -Pld public -- -t babelify -t envify",
+    "start": "NODE_ENV=development budo index.js -Pld public -- -t babelify -t envify",
     "build": "NODE_ENV=production browserify -t babelify -t envify -g uglifyify index.js | terser -co public/index.js"
   },
   "babel": {

@@ -40,8 +40,9 @@ class SetTimerBox {
       class={this.css.root}
     >
       <input
-        placeholder="Time to rise and shine?"
         class={this.css.input}
+        placeholder="Time to rise and shine?"
+        value={this.props.alarmTime}
         onAttach={self => self.focus()}
         onKeyUp={this.onKeyUp}
       />

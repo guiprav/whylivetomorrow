@@ -18,18 +18,60 @@ class App {
   css = Object.create(App.css);
 
   screen = 'setReasons';
+  reasons = [];
+  alarmTime = '';
+
+  get persistentState() {
+    return {
+      screen: this.screen,
+      reasons: this.reasons,
+      alarmTime: this.alarmTime,
+    };
+  }
 
   render = () => (
-    <div model={this} class={this.css.root}>
+    <div
+      model={this}
+      class={this.css.root}
+      onAttach={this.onAttach}
+      onDetach={this.onDetach}
+    >
       {d.if(this.screen === 'setReasons', (
-        <ReasonsBox onSetAlarmClick={() => this.screen = 'setTimer'} />
+        <ReasonsBox
+          reasons={this.reasons}
+          onSetAlarmClick={() => this.screen = 'setTimer'}
+        />
       ))}
 
       {d.if(this.screen === 'setTimer', (
-        <SetTimerBox onEscape={() => this.screen = 'setReasons'} />
+        <SetTimerBox
+          alarmTime={this.alarmTime}
+
+          onEscape={() => {
+            this.screen = 'setReasons';
+            this.alarmTime = '';
+          }}
+        />
       ))}
     </div>
   );
+
+  onAttach = () => {
+    Object.assign(this,
+      JSON.parse(localStorage.getItem('persistentState') || '{}'));
+
+    d.on('update', this.onUpdate);
+  };
+
+  onDetach = () => { d.off('update', this.onUpdate) };
+
+  onUpdate = () => {
+    let persistentStateJson = JSON.stringify(this.persistentState);
+
+    if (persistentStateJson !== this.lastPersistentStateJson) {
+      localStorage.setItem('persistentState', persistentStateJson);
+    }
+  };
 }
 
 export default App;
