@@ -25,6 +25,7 @@
   },
   "dependencies": {
     "@dominant/core": "^0.1.8",
+    "dayjs": "^1.10.4",
     "twind": "^0.15.5"
   },
   "devDependencies": {

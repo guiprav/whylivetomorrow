@@ -42,7 +42,7 @@ class SetTimerBox {
       <input
         class={this.css.input}
         placeholder="Time to rise and shine?"
-        value={this.props.alarmTime}
+        value={this.props.alarmTimeText}
         onAttach={input => input.select()}
         onFocus={ev => ev.target.select()}
         onKeyUp={this.onKeyUp}
