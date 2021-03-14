@@ -15,6 +15,11 @@ class App {
       to-gray-800
     `,
 
+    mEngaged: `
+      from-yellow-300
+      to-yellow-400
+    `,
+
     bgVideo: `
       fixed left-0 top-0 right-0 bottom-0
       hidden
@@ -44,7 +49,7 @@ class App {
   render = () => (
     <div
       model={this}
-      class={this.css.root}
+      class={[this.css.root, this.screen === 'engaged' && this.css.mEngaged]}
       onAttach={this.onAttach}
       onDetach={this.onDetach}
       onClick={() => this.active && (this.screen = 'setReasons')}
@@ -88,7 +93,11 @@ class App {
           mode="engaged"
           reasons={this.reasons}
           enteredReasons={this.enteredReasons}
-          onDisarmClick={() => this.screen = 'setReasons'}
+
+          onDisarmClick={() => {
+            this.enteredReasons = [];
+            this.screen = 'setReasons';
+          }}
         />
       ))}
     </div>
@@ -98,6 +107,10 @@ class App {
     Object.assign(this,
       JSON.parse(localStorage.getItem('persistentState') || '{}'));
 
+    for (let evName of this.interactionEventNames) {
+      addEventListener(evName, this.onInteraction);
+    }
+
     d.on('beforeUpdate', this.beforeUpdate);
     d.on('update', this.onUpdate);
 
@@ -105,10 +118,23 @@ class App {
   };
 
   onDetach = () => {
+    for (let evName of this.interactionEventNames) {
+      removeEventListener(evName, this.onInteraction);
+    }
+
     d.off('beforeUpdate', this.beforeUpdate);
     d.off('update', this.onUpdate);
 
     clearInterval(this.intervalId);
+  };
+
+  interactionEventNames = ['mousemove', 'click', 'input'];
+
+  onInteraction = () => {
+    this.tsLastInteraction = Date.now();
+
+    this.audioEl.pause();
+    this.audioEl.currentTime = 0;
   };
 
   beforeUpdate = () => {
@@ -138,7 +164,10 @@ class App {
   };
 
   onInterval = () => {
-    if (this.screen === 'engaged') { return }
+    if (this.screen === 'engaged') {
+      if (Date.now() - this.tsLastInteraction >= 20000) { this.audioEl.play() }
+      return;
+    }
 
     if (!this.active || !this.alarmTime || dayjs().isBefore(this.alarmTime)) {
       this.audioEl.pause();
