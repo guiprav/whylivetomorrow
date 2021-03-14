@@ -1,7 +1,7 @@
 import ReasonsBox from './ReasonsBox.jsx';
 import SetTimerBox from './SetTimerBox.jsx';
 import d from '@dominant/core';
-import { bem } from '../css.js';
+import { bem, tw } from '../css.js';
 
 class App {
   static css = bem('App', {
@@ -13,6 +13,14 @@ class App {
       from-gray-900
       to-gray-800
     `,
+
+    bgVideo: `
+      fixed left-0 top-0 right-0 bottom-0
+      hidden
+      w-full h-full
+      object-cover
+      opacity-75
+    `,
   });
 
   css = Object.create(App.css);
@@ -20,6 +28,8 @@ class App {
   screen = 'setReasons';
   reasons = [];
   alarmTime = '';
+
+  get active() { return this.screen === 'active' }
 
   get persistentState() {
     return {
@@ -35,7 +45,16 @@ class App {
       class={this.css.root}
       onAttach={this.onAttach}
       onDetach={this.onDetach}
+      onClick={() => this.active && (this.screen = 'setReasons')}
     >
+      <video
+        autoplay
+        muted
+        loop
+        class={[this.css.bgVideo, this.active && tw`block!`]}
+        children={<source type="video/mp4" src="bgActive.mp4" />}
+      />
+
       {d.if(this.screen === 'setReasons', (
         <ReasonsBox
           reasons={this.reasons}
@@ -51,6 +70,8 @@ class App {
             this.screen = 'setReasons';
             this.alarmTime = '';
           }}
+
+          onActivate={() => this.screen = 'active'}
         />
       ))}
     </div>

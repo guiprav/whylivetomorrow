@@ -31,7 +31,7 @@ class SetTimerBox {
     let text = ev.target.value.trim();
 
     if (ev.key === 'Escape') { return this.props.onEscape() }
-    if (ev.key === 'Enter' && text) { alert(text) }
+    if (ev.key === 'Enter' && text) { return this.props.onActivate() }
   };
 
   render = () => (
@@ -43,7 +43,8 @@ class SetTimerBox {
         class={this.css.input}
         placeholder="Time to rise and shine?"
         value={this.props.alarmTime}
-        onAttach={self => self.focus()}
+        onAttach={input => input.select()}
+        onFocus={ev => ev.target.select()}
         onKeyUp={this.onKeyUp}
       />
     </div>

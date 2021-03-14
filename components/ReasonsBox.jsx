@@ -15,10 +15,9 @@ class ReasonsBox {
       w-full
       focus:outline-none
       border-b border-transparent
-      rounded-lg
       px-4 py-2
       text-gray-500 hover:text-gray-800 focus:text-gray-800
-      bg-transparent focus:bg-white
+      bg-transparent hover:bg-white focus:bg-white
       opacity-75 hover:opacity-100 focus:opacity-100
     `,
 
@@ -72,7 +71,7 @@ class ReasonsBox {
       <div class={['flex', !!this.reasons.length && 'mb-1']}>
         <input
           placeholder="Why Live Tomorrow?"
-          class={[this.css.input, !!this.reasons.length && 'focus:border-yellow-400']}
+          class={[this.css.input, !!this.reasons.length && tw`focus:border-yellow-400`]}
           onAttach={input => input.focus()}
           onFocus={ev => ev.target.select()}
           onKeyUp={this.onKeyUp}
